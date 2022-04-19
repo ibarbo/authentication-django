@@ -9,7 +9,8 @@ from .models import Post
 
 @login_required(login_url="/login")
 def home(request):
-    posts = Post.objects.all()
+    posts = Post.objects.filter(
+        developer_id=request.user).order_by('-created_at')
 
     if request.method == "POST":
         post_id = request.POST.get("post-id")
